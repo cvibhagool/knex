@@ -90,6 +90,10 @@ export default class Transaction extends EventEmitter {
 
   commit(conn, value) {
     return this.query(conn, 'COMMIT;', 1, value)
+    .then(() => {
+      this.trxClient.emit('committed')
+      return Promise.resolve()
+    })
   }
 
   release(conn, value) {
