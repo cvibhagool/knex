@@ -31,15 +31,20 @@ describe('Query Building Tests', function() {
   require('./unit/schema/oracledb')
 })
 
+describe('Integration Tests', function() {
+  this.timeout(process.env.KNEX_TEST_TIMEOUT || 5000);
+  require('./integration')
+})
+
 var config = require('./knexfile');
-if (config.oracle) {
-  describe('ExternalAuth ORACLE Tests', function() {
+if (config.oracledb) {
+  describe('Oracledb driver tests', function() {
     this.timeout(process.env.KNEX_TEST_TIMEOUT || 5000);
     require('./unit/dialects/oracledb');
   });
 }
 
-describe('Integration Tests', function() {
-  this.timeout(process.env.KNEX_TEST_TIMEOUT || 5000);
-  require('./integration')
+describe('Docker Integration Tests', function() {
+  this.timeout(process.env.KNEX_TEST_TIMEOUT || 15000);
+  require('./docker')
 })
